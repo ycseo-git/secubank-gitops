@@ -7,9 +7,9 @@ spec:
   project: default
 
   source:
-    repoURL: file:///var/jenkins_home/gitops-repo
-    targetRevision: HEAD
-    path: apps/secubank/online-boutique/dev
+    repoURL: https://github.com/ycseo-git/secubank-gitops.git
+    targetRevision: main
+    path: apps/secubank/online-boutique/dev/chart
     helm:
       valueFiles:
         - values.yaml
