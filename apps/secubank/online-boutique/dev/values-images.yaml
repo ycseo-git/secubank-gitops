@@ -1,0 +1,7 @@
+images:
+  frontend:
+    repository: harbor.local:8088/secubank/frontend
+    tag: "__TAG__"
+  cartservice:
+    repository: harbor.local:8088/secubank/cartservice
+    tag: "__TAG__"

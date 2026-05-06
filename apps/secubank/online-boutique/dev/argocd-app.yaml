@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: secubank-online-boutique-dev
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: file:///var/jenkins_home/gitops-repo
+    targetRevision: HEAD
+    path: apps/secubank/online-boutique/dev
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-images.yaml
+        - values-security.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: secubank-dev
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

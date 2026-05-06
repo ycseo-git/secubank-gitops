@@ -1,0 +1,10 @@
+global:
+  project: secubank
+  app: online-boutique
+  env: dev
+  namespace: secubank-dev
+
+labels:
+  app.kubernetes.io/part-of: secubank
+  app.kubernetes.io/managed-by: argocd
+  secubank.io/env: dev
