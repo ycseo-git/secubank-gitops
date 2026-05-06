@@ -1,7 +1,31 @@
 images:
   frontend:
     repository: harbor.local:8088/secubank/frontend
-    tag: "__TAG__"
+    tag: "5096a85b"
   cartservice:
     repository: harbor.local:8088/secubank/cartservice
-    tag: "__TAG__"
+    tag: "5096a85b"
+  checkoutservice:
+    repository: harbor.local:8088/secubank/checkoutservice
+    tag: "5096a85b"
+  currencyservice:
+    repository: harbor.local:8088/secubank/currencyservice
+    tag: "5096a85b"
+  emailservice:
+    repository: harbor.local:8088/secubank/emailservice
+    tag: "5096a85b"
+  paymentservice:
+    repository: harbor.local:8088/secubank/paymentservice
+    tag: "5096a85b"
+  productcatalogservice:
+    repository: harbor.local:8088/secubank/productcatalogservice
+    tag: "5096a85b"
+  recommendationservice:
+    repository: harbor.local:8088/secubank/recommendationservice
+    tag: "5096a85b"
+  shippingservice:
+    repository: harbor.local:8088/secubank/shippingservice
+    tag: "5096a85b"
+  adservice:
+    repository: harbor.local:8088/secubank/adservice
+    tag: "5096a85b"

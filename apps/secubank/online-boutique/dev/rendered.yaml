@@ -1,4 +1,263 @@
 ---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: currencyservice
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: loadgenerator
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: productcatalogservice
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: checkoutservice
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: shippingservice
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cartservice
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: emailservice
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: paymentservice
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: frontend
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: recommendationservice
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: adservice
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: currencyservice
+  labels:
+    app: currencyservice
+spec:
+  type: ClusterIP
+  selector:
+    app: currencyservice
+  ports:
+  - name: grpc
+    port: 7000
+    targetPort: 7000
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: productcatalogservice
+  labels:
+    app: productcatalogservice
+spec:
+  type: ClusterIP
+  selector:
+    app: productcatalogservice
+  ports:
+  - name: grpc
+    port: 3550
+    targetPort: 3550
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkoutservice
+  labels:
+    app: checkoutservice
+spec:
+  type: ClusterIP
+  selector:
+    app: checkoutservice
+  ports:
+  - name: grpc
+    port: 5050
+    targetPort: 5050
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: shippingservice
+  labels:
+    app: shippingservice
+spec:
+  type: ClusterIP
+  selector:
+    app: shippingservice
+  ports:
+  - name: grpc
+    port: 50051
+    targetPort: 50051
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cartservice
+  labels:
+    app: cartservice
+spec:
+  type: ClusterIP
+  selector:
+    app: cartservice
+  ports:
+  - name: grpc
+    port: 7070
+    targetPort: 7070
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cart
+  labels:
+    app: redis-cart
+spec:
+  type: ClusterIP
+  selector:
+    app: redis-cart
+  ports:
+  - name: tcp-redis
+    port: 6379
+    targetPort: 6379
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: emailservice
+  labels:
+    app: emailservice
+spec:
+  type: ClusterIP
+  selector:
+    app: emailservice
+  ports:
+  - name: grpc
+    port: 5000
+    targetPort: 8080
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: paymentservice
+  labels:
+    app: paymentservice
+spec:
+  type: ClusterIP
+  selector:
+    app: paymentservice
+  ports:
+  - name: grpc
+    port: 50051
+    targetPort: 50051
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-external
+  labels:
+    app: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommendationservice
+  labels:
+    app: recommendationservice
+spec:
+  type: ClusterIP
+  selector:
+    app: recommendationservice
+  ports:
+  - name: grpc
+    port: 8080
+    targetPort: 8080
+---
+# Source: online-boutique/templates/online-boutique.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: adservice
+  labels:
+    app: adservice
+spec:
+  type: ClusterIP
+  selector:
+    app: adservice
+  ports:
+  - name: grpc
+    port: 9555
+    targetPort: 9555
+---
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,8 +289,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.currencyservice.repository }}:{{ .Values.images.currencyservice.tag
-          }}'
+        image: 'harbor.local:8088/secubank/currencyservice:5096a85b'
         ports:
         - name: grpc
           containerPort: 7000
@@ -54,26 +312,7 @@ spec:
             cpu: 200m
             memory: 128Mi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: currencyservice
-  labels:
-    app: currencyservice
-spec:
-  type: ClusterIP
-  selector:
-    app: currencyservice
-  ports:
-  - name: grpc
-    port: 7000
-    targetPort: 7000
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: currencyservice
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -148,11 +387,7 @@ spec:
             cpu: 500m
             memory: 512Mi
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: loadgenerator
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -184,8 +419,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.productcatalogservice.repository }}:{{ .Values.images.productcatalogservice.tag
-          }}'
+        image: 'harbor.local:8088/secubank/productcatalogservice:5096a85b'
         ports:
         - containerPort: 3550
         env:
@@ -207,26 +441,7 @@ spec:
             cpu: 200m
             memory: 128Mi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: productcatalogservice
-  labels:
-    app: productcatalogservice
-spec:
-  type: ClusterIP
-  selector:
-    app: productcatalogservice
-  ports:
-  - name: grpc
-    port: 3550
-    targetPort: 3550
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: productcatalogservice
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -257,8 +472,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.checkoutservice.repository }}:{{ .Values.images.checkoutservice.tag
-          }}'
+        image: 'harbor.local:8088/secubank/checkoutservice:5096a85b'
         ports:
         - containerPort: 5050
         readinessProbe:
@@ -290,26 +504,7 @@ spec:
             cpu: 200m
             memory: 128Mi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: checkoutservice
-  labels:
-    app: checkoutservice
-spec:
-  type: ClusterIP
-  selector:
-    app: checkoutservice
-  ports:
-  - name: grpc
-    port: 5050
-    targetPort: 5050
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: checkoutservice
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -340,8 +535,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.shippingservice.repository }}:{{ .Values.images.shippingservice.tag
-          }}'
+        image: 'harbor.local:8088/secubank/shippingservice:5096a85b'
         ports:
         - containerPort: 50051
         env:
@@ -364,26 +558,7 @@ spec:
             cpu: 200m
             memory: 128Mi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: shippingservice
-  labels:
-    app: shippingservice
-spec:
-  type: ClusterIP
-  selector:
-    app: shippingservice
-  ports:
-  - name: grpc
-    port: 50051
-    targetPort: 50051
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: shippingservice
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -415,8 +590,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.cartservice.repository }}:{{ .Values.images.cartservice.tag
-          }}'
+        image: 'harbor.local:8088/secubank/cartservice:5096a85b'
         ports:
         - containerPort: 7070
         env:
@@ -439,26 +613,7 @@ spec:
           grpc:
             port: 7070
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: cartservice
-  labels:
-    app: cartservice
-spec:
-  type: ClusterIP
-  selector:
-    app: cartservice
-  ports:
-  - name: grpc
-    port: 7070
-    targetPort: 7070
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: cartservice
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -513,21 +668,7 @@ spec:
       - name: redis-data
         emptyDir: {}
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis-cart
-  labels:
-    app: redis-cart
-spec:
-  type: ClusterIP
-  selector:
-    app: redis-cart
-  ports:
-  - name: tcp-redis
-    port: 6379
-    targetPort: 6379
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -559,8 +700,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.emailservice.repository }}:{{ .Values.images.emailservice.tag
-          }}'
+        image: 'harbor.local:8088/secubank/emailservice:5096a85b'
         ports:
         - containerPort: 8080
         env:
@@ -584,26 +724,7 @@ spec:
             cpu: 200m
             memory: 128Mi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: emailservice
-  labels:
-    app: emailservice
-spec:
-  type: ClusterIP
-  selector:
-    app: emailservice
-  ports:
-  - name: grpc
-    port: 5000
-    targetPort: 8080
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: emailservice
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -635,8 +756,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.paymentservice.repository }}:{{ .Values.images.paymentservice.tag
-          }}'
+        image: 'harbor.local:8088/secubank/paymentservice:5096a85b'
         ports:
         - containerPort: 50051
         env:
@@ -658,26 +778,7 @@ spec:
             cpu: 200m
             memory: 128Mi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: paymentservice
-  labels:
-    app: paymentservice
-spec:
-  type: ClusterIP
-  selector:
-    app: paymentservice
-  ports:
-  - name: grpc
-    port: 50051
-    targetPort: 50051
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: paymentservice
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -710,8 +811,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.frontend.repository }}:{{ .Values.images.frontend.tag
-          }}'
+        image: 'harbor.local:8088/secubank/frontend:5096a85b'
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -759,41 +859,7 @@ spec:
             cpu: 200m
             memory: 128Mi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-  labels:
-    app: frontend
-spec:
-  type: ClusterIP
-  selector:
-    app: frontend
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-external
-  labels:
-    app: frontend
-spec:
-  type: LoadBalancer
-  selector:
-    app: frontend
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: frontend
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -825,8 +891,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.recommendationservice.repository }}:{{ .Values.images.recommendationservice.tag
-          }}'
+        image: 'harbor.local:8088/secubank/recommendationservice:5096a85b'
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -852,26 +917,7 @@ spec:
             cpu: 200m
             memory: 450Mi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: recommendationservice
-  labels:
-    app: recommendationservice
-spec:
-  type: ClusterIP
-  selector:
-    app: recommendationservice
-  ports:
-  - name: grpc
-    port: 8080
-    targetPort: 8080
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: recommendationservice
----
+# Source: online-boutique/templates/online-boutique.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -903,8 +949,7 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.adservice.repository }}:{{ .Values.images.adservice.tag
-          }}'
+        image: 'harbor.local:8088/secubank/adservice:5096a85b'
         ports:
         - containerPort: 9555
         env:
@@ -927,23 +972,3 @@ spec:
           periodSeconds: 15
           grpc:
             port: 9555
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: adservice
-  labels:
-    app: adservice
-spec:
-  type: ClusterIP
-  selector:
-    app: adservice
-  ports:
-  - name: grpc
-    port: 9555
-    targetPort: 9555
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: adservice
