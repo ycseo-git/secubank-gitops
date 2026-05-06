@@ -10,11 +10,6 @@ spec:
     repoURL: https://github.com/ycseo-git/secubank-gitops.git
     targetRevision: main
     path: apps/secubank/online-boutique/dev/chart
-    helm:
-      valueFiles:
-        - values.yaml
-        - values-images.yaml
-        - values-security.yaml
 
   destination:
     server: https://kubernetes.default.svc
